@@ -40,8 +40,8 @@ if(process.env.NODE_ENV==="production"){
     })
 
 }else{
-    app.get("/s",(req,res)=>{
-        res.send("hello")
+    app.get("/",(req,res)=>{
+        res.send("Api is running sucessfully")
     })
 
 }
