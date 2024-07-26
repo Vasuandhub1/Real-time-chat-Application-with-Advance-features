@@ -67,7 +67,6 @@ const handleSend=async()=>{
  socket=io(ENDPOINT,{autoConnect:false})
  socket.connect()
  socket.emit("send_message",chat)
- 
  Settext("")
 }
 
@@ -107,7 +106,7 @@ const backbutton=()=>{
       {message?.map((elem,index)=>{
         let time=elem.createdAt.substr(2,8)
         return(
-          <MessageBox  message={elem.content} pic={elem.sender.pic} id={elem.sender._id} name={elem.sender.Username} time={time} ></MessageBox>
+          <MessageBox message={elem.content} pic={elem.sender.pic} id={elem.sender._id} name={elem.sender.Username} time={time} ></MessageBox>
         )
       })}
       <div className='relative'>

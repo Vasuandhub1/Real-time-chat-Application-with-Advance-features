@@ -23,10 +23,15 @@ exports.SendMessage=async(req,res)=>{
 
             // now create the message
            const newMessage= await Message.create({sender:TokenData.id,content:message,chat:chatId})
+           
+        //    now update the lates message 
+        // 
 
            const isMessage=await Message.findById(newMessage._id)
            .populate("sender","name pic email Username")
            .populate("chat")
+
+               
 
             return res.status(200).send({data:isMessage}) 
             

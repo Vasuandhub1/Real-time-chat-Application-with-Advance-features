@@ -1,7 +1,8 @@
 const mongoose=require("mongoose")
+require("dotenv").config()
 
 exports.dbConnect=async()=>{
-    const connect=await mongoose.connect("mongodb://localhost:27017/chat_app",{
+    const connect=await mongoose.connect(`${process.env.DATA_BASE}`,{
         family:4
     })
     if(connect){

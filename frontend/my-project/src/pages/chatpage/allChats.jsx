@@ -56,7 +56,7 @@ export default function AllChats() {
 
   return (
     <div className=" bg-fixed bg-[url('https://th.bing.com/th/id/OIP.PlQD3QT0iAbF-ELVE7nL2wAAAA?rs=1&pid=ImgDetMain')]">
-        <ChatHeader></ChatHeader>
+        <ChatHeader chats={chats}></ChatHeader>
         <div className='mx-4 my-2 relative top-1'>       
 <div class="max-w-md mx-auto">   
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -71,7 +71,7 @@ export default function AllChats() {
     </div>
 </div>
         </div>
-      <div class="relative h-screen pb-16 mb-50 mt-1  lg:max-w-sm sm:w-full bg-opacity-5 overflow-y-scroll border border-gray-100 rounded-lg dark:bg-gray-700 dark:border-gray-600 ">
+      <div class="relative h-screen pb-16 mb-50 mt-1 m-4 lg:max-w-sm sm:w-full bg-opacity-5 overflow-y-auto border border-gray-100 rounded-lg dark:bg-gray-700 dark:border-gray-600 ">
     <ul className=''>
        {chats?.map((elem,index)=>{
             if(elem.isGroupChat===true ){
@@ -107,7 +107,7 @@ export default function AllChats() {
                 let chat_users1=JSON.stringify(elem.users[1])
                 chat_users0=JSON.parse(chat_users0)
                 chat_users1=JSON.parse(chat_users1)
-                if(chat_users0._id!=logedInUserId){
+                if(chat_users0._id!=logedInUserId && chat_users1._id===logedInUserId ){
                   if(search===""){
                     const chatname=chat_users0.Username
                     console.log(chatname)
@@ -135,7 +135,7 @@ export default function AllChats() {
                         </li>)
                     }
                   }
-                }if(chat_users1._id!=logedInUserId){
+                }if(chat_users1._id!=logedInUserId && chat_users0._id===logedInUserId){
                     const chatname=chat_users1.Username
                    
                     if(chatname.includes(search)){

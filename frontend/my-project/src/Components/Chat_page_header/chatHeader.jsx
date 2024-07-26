@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RiChatHeartLine } from "react-icons/ri";
 import { MdOutlineGroups2 } from "react-icons/md";
 import { useSelector } from 'react-redux';
+import GroupModal from '../GroupModal/GroupModal';
 
-export default function ChatHeader() {
+export default function ChatHeader(props) {
     // now handle the useselector  to tak ethe use pic
     const pic=useSelector((state)=>state.user.profilepic)
+
+    // now create the states
+    const [craeteGroup,SetCreateGroup]=useState(false)
+
+    // now funcion to handle the groupModel
+    const handelCreateGroup=()=>{
+      if(craeteGroup===false){
+        SetCreateGroup(true)
+      }else{
+        SetCreateGroup(false)
+      }
+    }
   return (
     <div className="">
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
@@ -16,7 +29,7 @@ export default function ChatHeader() {
   </a>
   <div class="flex items-center md:order-2 space-x-10 md:space-x-10 rtl:space-x-reverse">
       
-      <button type="button" class="flex text-sm\ rounded-full md:me-0 focus:ring-4" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+      <button type="button" onClick={handelCreateGroup} class="flex text-sm\ rounded-full md:me-0 focus:ring-4" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span class="sr-only">Open user menu</span>
         <MdOutlineGroups2 size={30} />
       </button>
@@ -30,6 +43,7 @@ export default function ChatHeader() {
   
   </div>
 </nav>
+{craeteGroup?<GroupModal close={handelCreateGroup} chats={props.chats} ></GroupModal>:null}
 
     </div>
   )

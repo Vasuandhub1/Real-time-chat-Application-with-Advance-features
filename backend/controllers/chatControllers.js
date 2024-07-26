@@ -2,7 +2,7 @@ const chatModel = require("../models/chatModel")
 const jwt= require("jsonwebtoken")
 const userModel = require("../models/userModel")
 
-
+// this handler is use to connec the two users
 exports.accessChat=async(req,res)=>{
     try{
         // now take the uer id from the  req body
@@ -21,10 +21,16 @@ exports.accessChat=async(req,res)=>{
 
         const user=jwt.decode(token)
 
+        // now check if user and requester are not same
+
+        if(user.id===userId){
+            return res.send("you can not have chat with your self")
+        }
+
         let isChat= await chatModel.find({
             isGroupChat:false,
             $and:[
-                {users:{$elemMatch:{$eq:user._Id}}},
+                {users:{$elemMatch:{$eq:user.id}}},
                 {users:{$elemMatch:{$eq:userId}}}
                 
             ]
@@ -36,7 +42,7 @@ exports.accessChat=async(req,res)=>{
         })
 
         if(isChat.length>0){
-            res.send(isChat[0])
+           return res.send(isChat[0])
         }else{
             var chatData={
                 chatName:"sender",

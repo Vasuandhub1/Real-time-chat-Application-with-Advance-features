@@ -7,6 +7,8 @@ const route = require("./router/routers")
 const chatroutes= require("./router/chatroute")
 const cookieParser=require("cookie-parser")
 const cors=require("cors");
+const path=require("path")
+const dotenv=require("dotenv").config()
 
 
 //conncect to the database 
@@ -27,14 +29,31 @@ app.use(cors(paylod))
 app.use(express.json())
 app.use(cookieParser())
 
+// Deployment
+const __dirname1=path.resolve()
+if(process.env.NODE_ENV==="production"){
+
+    app.use(express.static(path.join(__dirname1,"/frontend/dist")))
+
+    app.get("*",(req,res)=>{
+        res.sendFile(path.resolve(__dirname1,"frontend","dest","index.html"))
+    })
+
+}else{
+    app.get("/s",(req,res)=>{
+        res.send("hello")
+    })
+
+}
+
 // routes
 app.use("/app1",route)
 app.use("/api/chat",chatroutes)
 
-app.get((req,res)=>{
+app.get("/s",(req,res)=>{
     res.send("hello")
 })
-const server=app.listen(3000,()=>console.log(`server is live at the ${3000}`))
+const server=app.listen(process.env.PORT,()=>console.log(`server is live at the ${process.env.PORT}`))
 
 // now initializating socket server on theexpress backend
 

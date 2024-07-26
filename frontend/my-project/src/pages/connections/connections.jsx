@@ -21,6 +21,14 @@ const handeldata=async()=>{
   Setdata(isData.data.data)
 }
 
+// now handle the add user to connect to the new user
+const handleAdduser=async(index)=>{
+  const userID=data[index]._id
+  // now we have to add the user to the chat 
+  const connected=await axios.post("http://localhost:3000/api/chat/accessChat",{userId:userID},{withCredentials:true})
+  console.log("connectionos",connected)
+}
+
 
 
 // now handle the useEffect
@@ -44,11 +52,11 @@ useEffect(()=>{
     </div>
 </div>
         </div>
-        {data.length>0?<div class="relative h-screen pb-16 mb-50 mt-1   lg:max-w-sm sm:w-full overflow-y-scroll bg-opacity-5  bg-white border border-gray-100 rounded-lg dark:bg-gray-700 dark:border-gray-600 ">
-     <ul className=''>
+        {data.length>0?<div class="relative h-screen pb-16 mb-50 m-3 lg:max-w-sm sm:w-full overflow-y-auto bg-opacity-5  bg-white border border-gray-100 rounded-lg dark:bg-gray-700 dark:border-gray-600 ">
+     <ul className=' '>
     {data?.map((elem,index)=>{
       return(
-        <li key={index} class="border-b border:gray-100 dark:border-gray-600 my-2">
+        <li key={index} onClick={()=>handleAdduser(index)} class="border-b border:gray-100 dark:border-gray-600 my-2">
                     <a href="#" class="flex items-center justify-start bg-white w-full px-4 py-3 hover:bg-slate-300">
                         <img class="me-3 rounded-full w-11 h-11" src="https://th.bing.com/th/id/OIP.w5GGXqNNN5RKuwzfVoKklgHaHa?w=522&h=522&rs=1&pid=ImgDetMain" alt="Jese Leos Avatar"/>
                         <div>

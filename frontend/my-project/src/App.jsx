@@ -7,20 +7,26 @@ import Header from './Components/header_componest/header'
 import Login from './Components/login_component/logIn'
 import Messages from './pages/messages/messages'
 import Connections from './pages/connections/connections'
+import { useSelector } from 'react-redux'
 
 
 
 function App() {
+  // take the logined user data
+  const auth=useSelector((state)=>state.user.userName)
   return (
     <>
     <BrowserRouter>
-    <Routes>
-      <Route path='/signUp' element={<SignUp></SignUp>}></Route>
-      <Route path='/signIn' element={<Login></Login>}></Route>
+    {auth?<Routes>
       <Route path='/Chats' element={<AllChats></AllChats>}></Route>
       <Route path='/Messages' element={<Messages></Messages>}></Route>
       <Route path='/Connections' element={<Connections></Connections>}></Route>
-    </Routes>
+      <Route path='/signIn' element={<Login></Login>}></Route>
+    </Routes>:<Routes>
+      <Route path='/' element={<SignUp></SignUp>}></Route>
+      <Route path='/signIn' element={<Login></Login>}></Route>
+    </Routes>}
+    
     </BrowserRouter>
     </>
   )
